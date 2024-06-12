@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Js - Regex 篩選中文字</title>
+    <link href="/blog/2024/06/12/js-regex-cjk/"/>
+    <url>/blog/2024/06/12/js-regex-cjk/</url>
+    
+    <content type="html"><![CDATA[<p>需要篩選中文的正則處理<br>網路上查到的內容幾乎都是        </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/\u4e00-\u9fa5/</span><br></code></pre></td></tr></table></figure><p>雖然能處理大多的中文<br>但是目前有個case就是中文有些<strong>難字</strong><br>少用但是偶爾會出現的狀況 無法被上述程式所篩選     </p><p>查詢過後發現難字等內容皆為<br>中日韓統合表意文字擴充(CJK Unified Ideographs Extension)<a href="#%E5%8F%83%E8%80%83%E4%BE%86%E6%BA%90%E5%85%A7%E5%AE%B9">^1^</a>的部分<br>難字與後續新增的擴充字型皆列於此內 且持續新增中<br>現(22&#x2F;09)已經擴充到H包 所以需要對上述之程式做擴充<br>此內容<a href="#%E5%8F%83%E8%80%83%E4%BE%86%E6%BA%90%E5%85%A7%E5%AE%B9">^2^</a>提供可支援至D包的寫法        </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 此處內容僅供參考 若需使用請先測試可行後才使用</span><br><span class="hljs-comment">// D包後的擴充內容（含）須自行抓取編號轉換後寫入 （轉換方法於補充有說明）</span><br><span class="hljs-comment">// 擴充B包 對應 20000-2A6D6</span><br><span class="hljs-keyword">const</span> extendCJK_B = <span class="hljs-regexp">/[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6]/</span>        <br><span class="hljs-comment">// 擴充C包 對應 2A700-2B734</span><br><span class="hljs-keyword">const</span> extendCJK_C = <span class="hljs-regexp">/\ud869[\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34]/</span><br><span class="hljs-comment">// 擴充D包 對應 2B840-2B81D </span><br><span class="hljs-keyword">const</span> extendCJK_D = <span class="hljs-regexp">/\ud86d[\udf40-\udfff]|\ud86e[\udc00-\udc1d]/</span><br><span class="hljs-comment">// 兼容表意文字12字 對應 F900-FA6D/FA70-FAD9</span><br><span class="hljs-keyword">const</span> extendCJK_Ideo = <span class="hljs-regexp">/[\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]/</span> <br><span class="hljs-comment">// 上述內容組合 文字至D包擴充</span><br><span class="hljs-keyword">const</span> extendCJK_toD = <span class="hljs-regexp">/[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]/</span><br></code></pre></td></tr></table></figure><p>如上所示 若有新增語言包內容則需一直新增下去<br>最後查詢由Unicode所提供的方法為<br>使用Regex後面新增的&#x2F;u標籤去處理unicode      </p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 抓取所有中文內容(不用自己擴充)</span><br><span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/\p&#123;Ideographic&#125;/u</span><br><span class="hljs-comment">// ...對 就是這麼簡單</span><br></code></pre></td></tr></table></figure><p>若無特殊需求 僅抓取中文字的話 使用上述之方法即可   </p><p>注意事項:<br>此方法還會抓取日韓相關的字元，使用前也要確定符合使用的情境<br>另瀏覽器必須是Chrome 64、Firefox 78、Safari 11.1 和 Edge 79 以上才支援&#x2F;u的語法使用     </p><h4 id="參考來源內容"><a href="#參考來源內容" class="headerlink" title="參考來源內容"></a>參考來源內容</h4><p><a href="https://www.unicode.org/reports/tr38/#BlockListing">1. unicode(CJK支援範圍內容)</a><br><a href="https://stackoverflow.com/questions/21109011/javascript-unicode-string-chinese-character-but-no-punctuation">2. stackoverflow(Javascript unicode string, chinese character but no punctuation)</a>        </p><h4 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h4><p>若需要自己指定擴充包或是字碼內容 需使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint">String.fromCodePoint()</a>處理然後加入該內容<br>ex:<code>String.fromCodePoint(0x2F804);  // &quot;\uD87E\uDC04&quot;</code></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>javascript</tag>
+      
+      <tag>js</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/blog/2000/01/01/hello-world/"/>
+    <url>/blog/2000/01/01/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
