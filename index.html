@@ -414,7 +414,7 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: 'https://script.google.com/macros/s/AKfycbyf58kRc92ow6AhonCPeVEIsLpK6C5-whL4Ky7Withcm7jPzgzdoY9WfzjjX7BcN6v4gg/exec',
+          url: 'https://script.google.com/macros/s/AKfycbyf58kRc92ow6AhonCPeVEIsLpK6C5-whL4Ky7Withcm7jPzgzdoY9WfzjjX7BcN6v4gg/exec?action=title',
           headers: {},
           dataType: 'json',
           success: function(result) {
@@ -438,7 +438,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://script.google.com/macros/s/AKfycbyf58kRc92ow6AhonCPeVEIsLpK6C5-whL4Ky7Withcm7jPzgzdoY9WfzjjX7BcN6v4gg/exec:', error);
+              console.error('Failed to request https://script.google.com/macros/s/AKfycbyf58kRc92ow6AhonCPeVEIsLpK6C5-whL4Ky7Withcm7jPzgzdoY9WfzjjX7BcN6v4gg/exec?action=title:', error);
             }
             typing(text);
           }
