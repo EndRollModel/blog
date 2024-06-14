@@ -12,19 +12,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="UwUmei">
   <meta name="keywords" content="">
   
     <meta name="description" content="從Google app script上傳圖片至Firebase storage">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Firebase storage 上傳圖片">
+<meta property="og:title" content="Js - Firebase storage 上傳圖片">
 <meta property="og:url" content="https://uwumei.com/blog/2024/04/24/firebase-storage-upload/index.html">
 <meta property="og:site_name" content="U w U">
 <meta property="og:description" content="從Google app script上傳圖片至Firebase storage">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2024-04-24T13:32:48.000Z">
-<meta property="article:modified_time" content="2024-06-13T09:48:25.273Z">
+<meta property="article:modified_time" content="2024-06-14T01:27:47.874Z">
 <meta property="article:author" content="UwUmei">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="google app script">
@@ -32,7 +34,7 @@
   
   
   
-  <title>Firebase storage 上傳圖片 - U w U</title>
+  <title>Js - Firebase storage 上傳圖片 - U w U</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -67,14 +69,14 @@
 
 
   
-<link rel="stylesheet" href="/blog/css/defStyle.css">
+<link rel="stylesheet" href="/blog/css/fontStyle.css">
 
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"uwumei.com","root":"/blog/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"uwumei.com","root":"/blog/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"JAVASCRIPT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -178,7 +180,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Firebase storage 上傳圖片"></span>
+            <span id="subtitle" data-typed-text="Js - Firebase storage 上傳圖片"></span>
           
         </div>
 
@@ -262,7 +264,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Firebase storage 上傳圖片</h1>
+            <h1 id="seo-header">Js - Firebase storage 上傳圖片</h1>
             
             
               <div class="markdown-body">
@@ -409,7 +411,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Firebase storage 上傳圖片</div>
+      <div>Js - Firebase storage 上傳圖片</div>
       <div>https://uwumei.com/blog/2024/04/24/firebase-storage-upload/</div>
     </div>
     <div class="license-meta">
@@ -539,7 +541,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-      <span id="year"></span> <i class="iconfont icon-love"></i> <span>UwUmei</span> <script>(()=>{document.getElementById("year").textContent = new Date().getFullYear();})();</script>
+      <span id="year"></span> <i class="iconfont icon-love"></i> <span>UwUmei</span> <script>(()=>{document.getElementById("year").textContent = new Date().getFullYear();})();</script> <br/> <span>Powered by </span><a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
   
