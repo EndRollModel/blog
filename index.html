@@ -412,37 +412,7 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        jQuery.ajax({
-          type: 'GET',
-          url: 'https://script.google.com/macros/s/AKfycbyf58kRc92ow6AhonCPeVEIsLpK6C5-whL4Ky7Withcm7jPzgzdoY9WfzjjX7BcN6v4gg/exec?action=title',
-          headers: {},
-          dataType: 'json',
-          success: function(result) {
-            var apiText;
-            if (result) {
-              var keys = 'data'.split(',');
-              if (result instanceof Array) {
-                result = result[0];
-              }
-              for (const k of keys) {
-                var value = result[k];
-                if (typeof value === 'string') {
-                  apiText = value;
-                  break;
-                } else if (value instanceof Object) {
-                  result = value;
-                }
-              }
-            }
-            apiText ? typing(apiText) : typing(text);
-          },
-          error: function(xhr, status, error) {
-            if (error) {
-              console.error('Failed to request https://script.google.com/macros/s/AKfycbyf58kRc92ow6AhonCPeVEIsLpK6C5-whL4Ky7Withcm7jPzgzdoY9WfzjjX7BcN6v4gg/exec?action=title:', error);
-            }
-            typing(text);
-          }
-        })
+        typing(text);
       
     })(window, document);
   </script>
