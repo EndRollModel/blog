@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Hexo - 幫Fluid加上CC0著作</title>
+    <link href="/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/"/>
+    <url>/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/</url>
+    
+    <content type="html"><![CDATA[<p>目前因為 Fluid 主題尚未增加 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh-hant">CC0 1.0</a> 的標註</p><p>但在Fluid的<a href="https://github.com/fluid-dev/hexo-theme-fluid/issues/1053">[issue&#x2F;1053]</a>有提出該問題 但目前還未新增CC0相關的內容</p><p>原本是想說無著作權則不標註作者欄位與著作權宣告</p><p>但這個宣告模組太漂亮了 我想把它擺在下面展示 XD</p><p>最後只好手動新增並且做個紀錄了</p><p>修改以下內容</p><ol><li>修改檔案</li></ol><ul><li>檔案路徑 : <code>theme/fluid/languages/zh-TW.yml</code><br>copyright 中新增一行<br><code>CC0: &#39;CC0 - 公眾領域&#39;</code></li></ul><ol start="2"><li>修改檔案</li></ol><ul><li>檔案路徑 : <code>theme/fluid/layout/_partails/post/copyright</code><br>  行數：50  <div class="code-wrapper"><pre><code class="hljs ejs">&lt;%- license %&gt;</code></pre></div>  替換成以下內容  <div class="code-wrapper"><pre><code class="hljs ejs">&lt;% if (license.toUpperCase() === &#x27;CC0&#x27;) &#123; %&gt;    &lt;a class=&quot;print-no-link&quot; target=&quot;_blank&quot; href=&quot;https://creativecommons.org/public-domain/cc0/&quot;&gt;       &lt;span class=&quot;hint--right hint--rounded&quot; aria-label=&quot;&lt;%- __(&#x27;post.copyright.CC0&#x27;) %&gt;&quot;&gt;           &lt;img class=&quot;iconfont icon-cc-zero&quot; style=&quot;width: 16px; height: 16px;&quot; src=&quot;&lt;%= config.root%&gt;img/cc-zero.svg&quot; alt=&quot;&quot;/&gt;       &lt;/span&gt;    &lt;/a&gt;&lt;% &#125; else &#123; %&gt;    &lt;%- license %&gt;&lt;% &#125; %&gt;</code></pre></div></li></ul><ol start="3"><li><p>使用該<a href="https://chooser-beta.creativecommons.org/">選擇器</a>選擇CC0的版權 存下該圖 將圖放入<code>/Img</code>並將檔名命名為<code>cc-zero.svg</code></p></li><li><p>修改<code>_config.fluid.yml</code>中的<code>copyright / license</code>值為CC0就可以使用了</p></li></ol><p>參考資料與相關閱讀</p><ul><li><a href="https://zh.wikipedia.org/zh-tw/%E5%85%AC%E6%9C%89%E9%A2%86%E5%9F%9F">公眾領域&#x2F;公有領域wiki</a> </li><li><a href="https://creativecommons.org/share-your-work/cclicenses/">ABOUT CC LICENSES</a></li><li><a href="https://github.com/fluid-dev/hexo-theme-fluid">hexo-theme-fluid</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Js - Firebase storage 上傳圖片</title>
     <link href="/blog/2024/04/24/firebase-storage-upload/"/>
     <url>/blog/2024/04/24/firebase-storage-upload/</url>
