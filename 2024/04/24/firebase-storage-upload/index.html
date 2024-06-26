@@ -26,7 +26,7 @@
 <meta property="og:description" content="從Google app script上傳圖片至Firebase storage">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2024-04-24T13:32:48.000Z">
-<meta property="article:modified_time" content="2024-06-14T01:27:47.874Z">
+<meta property="article:modified_time" content="2024-06-21T08:25:45.163Z">
 <meta property="article:author" content="UwUmei">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="google app script">
@@ -203,7 +203,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          716 字
+          717 字
         
       </span>
     
@@ -374,7 +374,7 @@
   &#125;
 &#125;</code></pre></div>
 
-<h3 id="安全性規則"><a href="#安全性規則" class="headerlink" title="安全性規則"></a>安全性規則</h3><p>寫入：必須為登入者 3mb以下 並且限定圖片<br>讀：必須為登入者要求</p>
+<h3 id="Firebase-安全性規則"><a href="#Firebase-安全性規則" class="headerlink" title="Firebase 安全性規則"></a>Firebase 安全性規則</h3><p>寫入：必須為登入者 3mb以下 並且限定圖片<br>讀：必須為登入者要求</p>
 <div class="code-wrapper"><pre><code class="hljs roboconf">service firebase.storage &#123;
   <span class="hljs-attribute">match /b/&#123;bucket&#125;/o &#123;</span>
 <span class="hljs-attribute">    match /&#123;allPaths=**&#125; &#123;</span>
@@ -430,7 +430,7 @@
             
                 
                     <a class="print-no-link" target="_blank" href="https://creativecommons.org/public-domain/cc0/">
-                        <span class="hint--right hint--rounded" aria-label="CC0 - 公眾領域">
+                        <span class="hint--right hint--rounded" aria-label="CC0 - 無著作權">
                             <img class="iconfont icon-cc-zero" style="width: 16px; height: 16px;" src="/blog/img/cc-zero.svg" srcset="/blog/img/loading.gif" lazyload alt=""/>
                         </span>
                     </a>
