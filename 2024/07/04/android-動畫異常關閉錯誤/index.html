@@ -18,23 +18,22 @@
   <meta name="author" content="UwUmei">
   <meta name="keywords" content="">
   
-    <meta name="description" content="從Google app script上傳圖片至Firebase storage">
+    <meta name="description" content="起因：使用者可能進入了開發者人員選項將動畫相關內容關閉（有蠻多的手機加速緩解效能等文章都會要求關閉動畫避免增加資源消耗）造成app動畫無法正常讀取卡死 被留了一星負評 主要原因：若是使用Animator來實作自訂的內容則會受到該設定影響維護的程式主要是因為該動畫播放結束前不會進行下一步的操作故產生了卡死的現象 處理方法：解1（現實面）: 請使用者不要亂改開發者設定  解2（程式面）: 因為開發者動">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Js - Firebase storage 上傳圖片">
-<meta property="og:url" content="https://uwumei.com/blog/2024/04/24/firebase-storage-upload/index.html">
+<meta property="og:title" content="android - 動畫異常關閉錯誤">
+<meta property="og:url" content="https://uwumei.com/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/index.html">
 <meta property="og:site_name" content="U w U">
-<meta property="og:description" content="從Google app script上傳圖片至Firebase storage">
+<meta property="og:description" content="起因：使用者可能進入了開發者人員選項將動畫相關內容關閉（有蠻多的手機加速緩解效能等文章都會要求關閉動畫避免增加資源消耗）造成app動畫無法正常讀取卡死 被留了一星負評 主要原因：若是使用Animator來實作自訂的內容則會受到該設定影響維護的程式主要是因為該動畫播放結束前不會進行下一步的操作故產生了卡死的現象 處理方法：解1（現實面）: 請使用者不要亂改開發者設定  解2（程式面）: 因為開發者動">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2024-04-24T13:32:48.000Z">
-<meta property="article:modified_time" content="2024-06-21T08:25:45.163Z">
+<meta property="article:published_time" content="2024-07-04T09:08:41.000Z">
+<meta property="article:modified_time" content="2024-07-05T01:23:57.513Z">
 <meta property="article:author" content="UwUmei">
-<meta property="article:tag" content="javascript">
-<meta property="article:tag" content="google app script">
+<meta property="article:tag" content="android">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Js - Firebase storage 上傳圖片 - U w U</title>
+  <title>android - 動畫異常關閉錯誤 - U w U</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -183,7 +182,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Js - Firebase storage 上傳圖片"></span>
+            <span id="subtitle" data-typed-text="android - 動畫異常關閉錯誤"></span>
           
         </div>
 
@@ -194,8 +193,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-24 21:32" pubdate>
-          2024年4月24日
+        <time datetime="2024-07-04 17:08" pubdate>
+          2024年7月4日
         </time>
       </span>
     
@@ -206,7 +205,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          717 字
+          442 字
         
       </span>
     
@@ -217,7 +216,7 @@
         
         
         
-          6 分鐘
+          4 分鐘
         
       </span>
     
@@ -267,127 +266,36 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Js - Firebase storage 上傳圖片</h1>
+            <h1 id="seo-header">android - 動畫異常關閉錯誤</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Firebase-Storage上傳"><a href="#Firebase-Storage上傳" class="headerlink" title="Firebase Storage上傳"></a>Firebase Storage上傳</h1><h3 id="說明："><a href="#說明：" class="headerlink" title="說明："></a>說明：</h3><p>由於想使用google app script上傳圖片<br>但是app script本身不支援firebase admin相關的套件</p>
-<p>以前曾經使用google cloud storage的bucket轉至firebase後<br>另外申請下載用的網址才能運作<br>但實在年代久遠忘記怎麼做了 該份原始碼也丟失了</p>
-<p>最終原本也是要使用google cloud storage上傳後再處理<br>發現firebase也可以使用post上傳圖片<br>只要驗證使用者就可以通過安全性規則</p>
-<h3 id="方案："><a href="#方案：" class="headerlink" title="方案："></a>方案：</h3><p>建立匿名使用者後 使用該使用者通過安全性規則 再讓該使用者上傳圖片</p>
-<h3 id="流程："><a href="#流程：" class="headerlink" title="流程："></a>流程：</h3><ol>
-<li><p><a target="_blank" rel="noopener" href="https://console.firebase.google.com/u/0/">建立Firebase專案</a></p>
-</li>
-<li><p>開啟專案設定 ⮕ 一般設定標籤 ⮕ 紀錄 <strong>“網路 API 金鑰(web api key)”</strong></p>
-</li>
-<li><p>專案設定 ⮕ 服務帳戶標籤 ⮕ Firebase Admin功能中 產生新的私密金鑰 ⮕ <strong>下載金鑰</strong></p>
-</li>
-<li><p>使用以下程式碼建立JWT <a target="_blank" rel="noopener" href="https://firebase.google.com/docs/auth/admin/create-custom-tokens?hl=zh-tw">官方Jwt說明</a></p>
-</li>
-<li><p>使用以下程式碼建立匿名使用者並取得UserToken <a target="_blank" rel="noopener" href="https://firebase.google.com/docs/reference/rest/auth?hl=zh-tw">官方Restful說明</a></p>
-</li>
-<li><p>使用以下程式碼上傳圖片 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/46806545/how-to-upload-objects-to-firebase-storage-using-postman-for-testing">stackoverflow問題(官方來源找不到)</a></p>
-</li>
-</ol>
-<h3 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼:"></a>程式碼:</h3><div class="code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * 建立jwt的機制</span>
-<span class="hljs-comment"> * 認證的樣式 依照官方文件建立</span>
-<span class="hljs-comment"> */</span>
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">createJWT</span>(<span class="hljs-params"></span>) &#123;
-  <span class="hljs-comment">// 這裡使用的內容 請參考步驟3取得的金鑰內容</span>
-  <span class="hljs-keyword">const</span> privatKey = <span class="hljs-string">&#x27;your private_key&#x27;</span>;
-  <span class="hljs-keyword">const</span> clientEmail = <span class="hljs-string">&#x27;your client_email&#x27;</span>;
-  <span class="hljs-keyword">const</span> userId = <span class="hljs-string">&#x27;your user id&#x27;</span>; <span class="hljs-comment">// 可自訂uid的內容 id會顯示在 firebase auth之中</span>
-    
-  <span class="hljs-keyword">const</span> header = &#123;
-    <span class="hljs-attr">alg</span>: <span class="hljs-string">&#x27;RS256&#x27;</span>,
-    <span class="hljs-attr">typ</span>: <span class="hljs-string">&#x27;JWT&#x27;</span>,
-  &#125;;
+                <p>起因：<br>使用者<font color="red">可能</font>進入了開發者人員選項<br>將動畫相關內容關閉<br>（有蠻多的手機加速緩解效能等文章都會要求關閉動畫避免增加資源消耗）<br>造成app動畫無法正常讀取卡死 被留了一星負評</p>
+<p>主要原因：<br>若是使用Animator來實作自訂的內容則會受到該設定影響<br>維護的程式主要是因為該動畫播放結束前不會進行下一步的操作<br>故產生了卡死的現象</p>
+<h4 id="處理方法："><a href="#處理方法：" class="headerlink" title="處理方法："></a>處理方法：</h4><p>解1（現實面）: 請使用者不要亂改開發者設定 </p>
+<p>解2（程式面）: 因為開發者動畫設定屬於比較隱私的範圍 且並無公開api接口<br>所以必須採用映射的方式去修改該內容</p>
+<p>android9以前可以映射ValueAnimator中的sDurationScale去修改值來達成效果<br>而sdk29以後 google將sDurationScale列為灰名單並且不讓開發者去讀取<br><a target="_blank" rel="noopener" href="https://developer.android.google.cn/about/versions/10/non-sdk-q?hl=zh-cn">google說明</a></p>
+<p>有一個@test函式setDurationScale內容是修改sDurationScale<br>映射該函式去修改sDurationScale來達到最後目的</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28516100/make-objectanimator-animation-duration-independent-of-global-animator-duration-s">stackoverflow</a></p>
+<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Get duration scale from the global settings.</span>
+<span class="hljs-type">float</span> <span class="hljs-variable">durationScale</span> <span class="hljs-operator">=</span> Settings.Global.getFloat(context.getContentResolver(),
+                        Settings.Global.ANIMATOR_DURATION_SCALE, <span class="hljs-number">0</span>);
 
-  <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();
-  <span class="hljs-keyword">const</span> expires = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(now);
-  expires.<span class="hljs-title function_">setHours</span>(expires.<span class="hljs-title function_">getHours</span>() + <span class="hljs-number">1</span>); <span class="hljs-comment">// 一小時過期</span>
-  <span class="hljs-keyword">const</span> payload = &#123;
-    <span class="hljs-attr">iss</span>: clientEmail,
-    <span class="hljs-attr">sub</span>: clientEmail,
-    <span class="hljs-attr">aud</span>: <span class="hljs-string">&#x27;https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit&#x27;</span>,
-    <span class="hljs-attr">iat</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(now / <span class="hljs-number">1000</span>),
-    <span class="hljs-attr">exp</span>: <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(expires.<span class="hljs-title function_">getTime</span>() / <span class="hljs-number">1000</span>),
-    <span class="hljs-attr">uid</span>: userId, <span class="hljs-comment">// </span>
-  &#125;;
-
-  <span class="hljs-keyword">let</span> toSign = <span class="hljs-title class_">Utilities</span>.<span class="hljs-title function_">base64Encode</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(header)) + <span class="hljs-string">&#x27;.&#x27;</span> + <span class="hljs-title class_">Utilities</span>.<span class="hljs-title function_">base64Encode</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(payload));
-  <span class="hljs-keyword">let</span> key = privatKey.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\\n/g</span>, <span class="hljs-string">&#x27;\n&#x27;</span>); <span class="hljs-comment">// key因為放在系統參數中才需使用 否則不用該行</span>
-  <span class="hljs-keyword">const</span> signatureBytes = <span class="hljs-title class_">Utilities</span>.<span class="hljs-title function_">computeRsaSha256Signature</span>(
-    toSign,
-    key
-  );
-  <span class="hljs-keyword">const</span> signature = <span class="hljs-title class_">Utilities</span>.<span class="hljs-title function_">base64Encode</span>(signatureBytes);
-  <span class="hljs-keyword">return</span> toSign + <span class="hljs-string">&#x27;.&#x27;</span> + signature;
-&#125;
-</code></pre></div>
-
-<div class="code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * 取得使用者的token </span>
-<span class="hljs-comment"> * 來源：https://firebase.google.com/docs/reference/rest/auth?hl=zh-tw</span>
-<span class="hljs-comment"> * */</span> 
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">getUserToken</span>(<span class="hljs-params">jwtToken</span>)&#123;
-  <span class="hljs-keyword">const</span> projectApiKey = <span class="hljs-string">&quot;web api key&quot;</span>; <span class="hljs-comment">// 步驟2中取得的web api key</span>
-  <span class="hljs-keyword">const</span> baseUrl = <span class="hljs-string">`https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=<span class="hljs-subst">$&#123;projectApiKey&#125;</span>`</span>
-  <span class="hljs-keyword">const</span> requestBody = &#123;
-    <span class="hljs-string">&quot;token&quot;</span>: jwtToken,
-    <span class="hljs-string">&quot;returnSecureToken&quot;</span>: <span class="hljs-literal">true</span>
-  &#125;;
-  <span class="hljs-keyword">const</span> options = &#123;
-    <span class="hljs-string">&quot;method&quot;</span>: <span class="hljs-string">&quot;post&quot;</span>,
-    <span class="hljs-string">&quot;contentType&quot;</span>: <span class="hljs-string">&quot;application/json&quot;</span>,
-    <span class="hljs-string">&quot;payload&quot;</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(requestBody),
-  &#125;;
-  <span class="hljs-keyword">const</span> response = <span class="hljs-title class_">UrlFetchApp</span>.<span class="hljs-title function_">fetch</span>(baseUrl, options);
-
-  <span class="hljs-comment">// 處理回應</span>
-  <span class="hljs-keyword">const</span> responseData = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(response.<span class="hljs-title function_">getContentText</span>());
-  <span class="hljs-keyword">return</span> responseData.<span class="hljs-property">idToken</span>;
-&#125;
-</code></pre></div>
-
-<div class="code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> uploadImage = <span class="hljs-function">(<span class="hljs-params">fileName, image</span>) =&gt;</span> &#123;
-  <span class="hljs-keyword">const</span> uploadUserToken = <span class="hljs-title function_">getUserToken</span>();
-  <span class="hljs-keyword">try</span>&#123;
-    <span class="hljs-keyword">const</span> baseUrl = <span class="hljs-string">`https://firebasestorage.googleapis.com/v0/b/<span class="hljs-subst">$&#123;bucketName&#125;</span>/o/<span class="hljs-subst">$&#123;fileName&#125;</span>`</span>
-    <span class="hljs-keyword">const</span> options = &#123;
-        <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;post&#x27;</span>,
-        <span class="hljs-attr">headers</span>: &#123;
-            <span class="hljs-string">&#x27;Authorization&#x27;</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">$&#123;uploadUserToken&#125;</span>`</span>,
-            <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/octet-stream&#x27;</span>,
-        &#125;,
-        payload : image,
-    &#125;;
-    <span class="hljs-keyword">const</span> response = <span class="hljs-title class_">UrlFetchApp</span>.<span class="hljs-title function_">fetch</span>(baseUrl, options);
-    <span class="hljs-keyword">const</span> responseData = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(response.<span class="hljs-title function_">getContentText</span>());
-    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">hasOwn</span>(responseData, <span class="hljs-string">&#x27;bucket&#x27;</span>)) &#123;
-        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>;
-    &#125; <span class="hljs-keyword">else</span> &#123;
-        <span class="hljs-keyword">const</span> imageUrl = <span class="hljs-string">`https://firebasestorage.googleapis.com/v0/b/<span class="hljs-subst">$&#123;responseData.bucket&#125;</span>/o/<span class="hljs-subst">$&#123;responseData.name&#125;</span>?alt=media&amp;token=<span class="hljs-subst">$&#123;responseData.downloadTokens&#125;</span>`</span>;
-        <span class="hljs-keyword">return</span> imageUrl
-    &#125;
-  &#125;<span class="hljs-keyword">catch</span>(e)&#123;
-    <span class="hljs-keyword">return</span> e.<span class="hljs-property">message</span>;
+<span class="hljs-comment">// If global duration scale is not 1 (default), try to override it</span>
+<span class="hljs-comment">// for the current application.</span>
+<span class="hljs-keyword">if</span> (durationScale != <span class="hljs-number">1</span>) &#123;
+  <span class="hljs-keyword">try</span> &#123;
+    ValueAnimator.class.getMethod(<span class="hljs-string">&quot;setDurationScale&quot;</span>, <span class="hljs-type">float</span>.class).invoke(<span class="hljs-literal">null</span>, <span class="hljs-number">1f</span>);
+    durationScale = <span class="hljs-number">1f</span>;
+  &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;
+    <span class="hljs-comment">// It means something bad happened, and animations are still</span>
+    <span class="hljs-comment">// altered by the global settings. You should warn the user and</span>
+    <span class="hljs-comment">// exit application.</span>
   &#125;
 &#125;</code></pre></div>
-
-<h3 id="Firebase-安全性規則"><a href="#Firebase-安全性規則" class="headerlink" title="Firebase 安全性規則"></a>Firebase 安全性規則</h3><p>寫入：必須為登入者 3mb以下 並且限定圖片<br>讀：必須為登入者要求</p>
-<div class="code-wrapper"><pre><code class="hljs roboconf">service firebase.storage &#123;
-  <span class="hljs-attribute">match /b/&#123;bucket&#125;/o &#123;</span>
-<span class="hljs-attribute">    match /&#123;allPaths=**&#125; &#123;</span>
-<span class="hljs-attribute">    	allow write</span>: if request<span class="hljs-variable">.auth</span> != null
-      			  &amp;&amp; request<span class="hljs-variable">.resource</span><span class="hljs-variable">.size</span> &lt; 3 * 1024 * 1024
-                  &amp;&amp; request<span class="hljs-variable">.resource</span><span class="hljs-variable">.contentType</span><span class="hljs-variable">.matches</span>(&#x27;image/.*&#x27;);
-      <span class="hljs-attribute">allow read</span>: if request<span class="hljs-variable">.auth</span> != null;
-    &#125;
-  &#125;
-&#125;</code></pre></div>
+<p>該方法放在onCreate或是需要讀取動畫的地方即可</p>
+<p>＊補充＊<br>防使用者去做這種事情真的很累<br>開發者設定警告本就有 如果亂改可能會造成無法正常執行的錯誤<br>完全都不會知道你親愛的使用者都對他的手機做了什麼<br>結果你不知道發生了什麼 然後就被留了一星或是負面評價<br>開發者們 真的是辛苦了 O7</p>
 
                 
               </div>
@@ -400,9 +308,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/javascript/" class="print-no-link">#javascript</a>
-      
-        <a href="/blog/tags/google-app-script/" class="print-no-link">#google app script</a>
+        <a href="/blog/tags/android/" class="print-no-link">#android</a>
       
     </div>
   
@@ -414,15 +320,15 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Js - Firebase storage 上傳圖片</div>
-      <div>https://uwumei.com/blog/2024/04/24/firebase-storage-upload/</div>
+      <div>android - 動畫異常關閉錯誤</div>
+      <div>https://uwumei.com/blog/2024/07/04/android-動畫異常關閉錯誤/</div>
     </div>
     <div class="license-meta">
       
       
         <div class="license-meta-item license-meta-date">
           <div>發布於</div>
-          <div>2024年4月24日</div>
+          <div>2024年7月4日</div>
         </div>
       
       
@@ -453,18 +359,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/" title="Hexo - 幫Fluid加上CC0著作">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hexo - 幫Fluid加上CC0著作</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2022/10/04/js-regex-cjk/" title="Js - Regex 篩選中文字">
-                        <span class="hidden-mobile">Js - Regex 篩選中文字</span>
+                      <a href="/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/" title="Hexo - 幫Fluid加上CC0著作">
+                        <span class="hidden-mobile">Hexo - 幫Fluid加上CC0著作</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -485,8 +385,8 @@
       <script type="text/javascript">
         var disqus_config = function() {
           this.language = "zh_TW";
-          this.page.url = 'https://uwumei.com/blog/2024/04/24/firebase-storage-upload/';
-          this.page.identifier = '/blog/2024/04/24/firebase-storage-upload/';
+          this.page.url = 'https://uwumei.com/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/';
+          this.page.identifier = '/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

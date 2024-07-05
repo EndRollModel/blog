@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>android - 動畫異常關閉錯誤</title>
+    <link href="/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/"/>
+    <url>/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/</url>
+    
+    <content type="html"><![CDATA[<p>起因：<br>使用者<font color="red">可能</font>進入了開發者人員選項<br>將動畫相關內容關閉<br>（有蠻多的手機加速緩解效能等文章都會要求關閉動畫避免增加資源消耗）<br>造成app動畫無法正常讀取卡死 被留了一星負評</p><p>主要原因：<br>若是使用Animator來實作自訂的內容則會受到該設定影響<br>維護的程式主要是因為該動畫播放結束前不會進行下一步的操作<br>故產生了卡死的現象</p><h4 id="處理方法："><a href="#處理方法：" class="headerlink" title="處理方法："></a>處理方法：</h4><p>解1（現實面）: 請使用者不要亂改開發者設定 </p><p>解2（程式面）: 因為開發者動畫設定屬於比較隱私的範圍 且並無公開api接口<br>所以必須採用映射的方式去修改該內容</p><p>android9以前可以映射ValueAnimator中的sDurationScale去修改值來達成效果<br>而sdk29以後 google將sDurationScale列為灰名單並且不讓開發者去讀取<br><a href="https://developer.android.google.cn/about/versions/10/non-sdk-q?hl=zh-cn">google說明</a></p><p>有一個@test函式setDurationScale內容是修改sDurationScale<br>映射該函式去修改sDurationScale來達到最後目的</p><p><a href="https://stackoverflow.com/questions/28516100/make-objectanimator-animation-duration-independent-of-global-animator-duration-s">stackoverflow</a></p><div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Get duration scale from the global settings.</span><span class="hljs-type">float</span> <span class="hljs-variable">durationScale</span> <span class="hljs-operator">=</span> Settings.Global.getFloat(context.getContentResolver(),                        Settings.Global.ANIMATOR_DURATION_SCALE, <span class="hljs-number">0</span>);<span class="hljs-comment">// If global duration scale is not 1 (default), try to override it</span><span class="hljs-comment">// for the current application.</span><span class="hljs-keyword">if</span> (durationScale != <span class="hljs-number">1</span>) &#123;  <span class="hljs-keyword">try</span> &#123;    ValueAnimator.class.getMethod(<span class="hljs-string">&quot;setDurationScale&quot;</span>, <span class="hljs-type">float</span>.class).invoke(<span class="hljs-literal">null</span>, <span class="hljs-number">1f</span>);    durationScale = <span class="hljs-number">1f</span>;  &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;    <span class="hljs-comment">// It means something bad happened, and animations are still</span>    <span class="hljs-comment">// altered by the global settings. You should warn the user and</span>    <span class="hljs-comment">// exit application.</span>  &#125;&#125;</code></pre></div><p>該方法放在onCreate或是需要讀取動畫的地方即可</p><p>＊補充＊<br>防使用者去做這種事情真的很累<br>開發者設定警告本就有 如果亂改可能會造成無法正常執行的錯誤<br>完全都不會知道你親愛的使用者都對他的手機做了什麼<br>結果你不知道發生了什麼 然後就被留了一星或是負面評價<br>開發者們 真的是辛苦了 O7</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>android</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hexo - 幫Fluid加上CC0著作</title>
     <link href="/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/"/>
     <url>/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/</url>
