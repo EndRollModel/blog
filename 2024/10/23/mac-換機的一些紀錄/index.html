@@ -18,22 +18,22 @@
   <meta name="author" content="UwUmei">
   <meta name="keywords" content="">
   
-    <meta name="description" content="關於使用者自作聰明(?)導致app 被留下了一星的悲慘故事.">
+    <meta name="description" content="公司換了mac電腦遇到一堆問題 就 .. 記錄一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android - 動畫異常關閉錯誤">
-<meta property="og:url" content="https://uwumei.com/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/index.html">
+<meta property="og:title" content="mac - 換機的一些紀錄">
+<meta property="og:url" content="https://uwumei.com/blog/2024/10/23/mac-%E6%8F%9B%E6%A9%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%B4%80%E9%8C%84/index.html">
 <meta property="og:site_name" content="U w U">
-<meta property="og:description" content="關於使用者自作聰明(?)導致app 被留下了一星的悲慘故事.">
+<meta property="og:description" content="公司換了mac電腦遇到一堆問題 就 .. 記錄一下">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2024-07-04T09:08:41.000Z">
-<meta property="article:modified_time" content="2024-07-11T09:20:20.626Z">
+<meta property="article:published_time" content="2024-10-23T03:26:12.000Z">
+<meta property="article:modified_time" content="2024-10-23T08:07:02.319Z">
 <meta property="article:author" content="UwUmei">
-<meta property="article:tag" content="android">
+<meta property="article:tag" content="mac">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Android - 動畫異常關閉錯誤 - U w U</title>
+  <title>mac - 換機的一些紀錄 - U w U</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -182,7 +182,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Android - 動畫異常關閉錯誤"></span>
+            <span id="subtitle" data-typed-text="mac - 換機的一些紀錄"></span>
           
         </div>
 
@@ -193,8 +193,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-04 17:08" pubdate>
-          2024年7月4日
+        <time datetime="2024-10-23 11:26" pubdate>
+          2024年10月23日
         </time>
       </span>
     
@@ -205,7 +205,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          442 字
+          690 字
         
       </span>
     
@@ -216,7 +216,7 @@
         
         
         
-          4 分鐘
+          6 分鐘
         
       </span>
     
@@ -266,36 +266,38 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Android - 動畫異常關閉錯誤</h1>
+            <h1 id="seo-header">mac - 換機的一些紀錄</h1>
             
             
               <div class="markdown-body">
                 
-                <p>起因：<br>使用者<font color="red">可能</font>進入了開發者人員選項<br>將動畫相關內容關閉<br>（有蠻多的手機加速緩解效能等文章都會要求關閉動畫避免增加資源消耗）<br>造成app動畫無法正常讀取卡死 被留了一星負評</p>
-<p>主要原因：<br>若是使用Animator來實作自訂的內容則會受到該設定影響<br>維護的程式主要是因為該動畫播放結束前不會進行下一步的操作<br>故產生了卡死的現象</p>
-<h4 id="處理方法："><a href="#處理方法：" class="headerlink" title="處理方法："></a>處理方法：</h4><p>解1（現實面）: 請使用者不要亂改開發者設定 </p>
-<p>解2（程式面）: 因為開發者動畫設定屬於比較隱私的範圍 且並無公開api接口<br>所以必須採用映射的方式去修改該內容</p>
-<p>android9以前可以映射ValueAnimator中的sDurationScale去修改值來達成效果<br>而sdk29以後 google將sDurationScale列為灰名單並且不讓開發者去讀取<br><a target="_blank" rel="noopener" href="https://developer.android.google.cn/about/versions/10/non-sdk-q?hl=zh-cn">google說明</a></p>
-<p>有一個@test函式setDurationScale內容是修改sDurationScale<br>映射該函式去修改sDurationScale來達到最後目的</p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28516100/make-objectanimator-animation-duration-independent-of-global-animator-duration-s">stackoverflow</a></p>
-<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Get duration scale from the global settings.</span>
-<span class="hljs-type">float</span> <span class="hljs-variable">durationScale</span> <span class="hljs-operator">=</span> Settings.Global.getFloat(context.getContentResolver(),
-                        Settings.Global.ANIMATOR_DURATION_SCALE, <span class="hljs-number">0</span>);
-
-<span class="hljs-comment">// If global duration scale is not 1 (default), try to override it</span>
-<span class="hljs-comment">// for the current application.</span>
-<span class="hljs-keyword">if</span> (durationScale != <span class="hljs-number">1</span>) &#123;
-  <span class="hljs-keyword">try</span> &#123;
-    ValueAnimator.class.getMethod(<span class="hljs-string">&quot;setDurationScale&quot;</span>, <span class="hljs-type">float</span>.class).invoke(<span class="hljs-literal">null</span>, <span class="hljs-number">1f</span>);
-    durationScale = <span class="hljs-number">1f</span>;
-  &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;
-    <span class="hljs-comment">// It means something bad happened, and animations are still</span>
-    <span class="hljs-comment">// altered by the global settings. You should warn the user and</span>
-    <span class="hljs-comment">// exit application.</span>
-  &#125;
-&#125;</code></pre></div>
-<p>該方法放在onCreate或是需要讀取動畫的地方即可</p>
-<p>＊補充＊<br>防使用者去做這種事情真的很累<br>開發者設定警告本就有 如果亂改可能會造成無法正常執行的錯誤<br>完全都不會知道你親愛的使用者都對他的手機做了什麼<br>結果你不知道發生了什麼 然後就被留了一星或是負面評價<br>開發者們 真的是辛苦了 O7</p>
+                <p>老樣子 來個事發經過</p>
+<p>公司IMac是2017的Intel版本 </p>
+<p>2023年apple發布macOS14(sonoma)時 宣布部分舊款電腦無法升級sonoma 公司電腦也在列表內 猶如被判了死刑</p>
+<p>結果後續發現xcode還是能安心build17 想說應該還會為了後續os更新xcode吧 後續就沒關心這事情了</p>
+<p>直到今年ios18發布後 客戶抱怨使用我們的app閃退了 發現公司電腦根本build不到ios 18 手邊也沒任何方法可以測試</p>
+<p>公司只好買了一台新的IMAC M3 但因為硬碟大小不同 不能用時光機轉移</p>
+<p>只好把專案放到隨身碟移植過去了 </p>
+<p>然後繞了一大圈把專案環境設定好後 決定做個紀錄 免得到時候相關問題又會把自己卡死</p>
+<hr>
+<h3 id="xcode"><a href="#xcode" class="headerlink" title="xcode"></a>xcode</h3><h4 id="憑證問題："><a href="#憑證問題：" class="headerlink" title="憑證問題："></a>憑證問題：</h4><p>xcode登入apple帳號後 另外產生一張新的憑證了 然後apple那邊就還要針對這張憑證去新增</p>
+<p>先在舊的電腦上 - xcode設定 - accounts - 找到team的使用者（組織） - manage certificates - 將憑證匯出 - 轉移到新電腦點選憑證使用匯入</p>
+<p>之後再到apple developer上將新的電腦自動生成的憑證加入各專案後下載使用即可了       </p>
+<h4 id="模擬器問題："><a href="#模擬器問題：" class="headerlink" title="模擬器問題："></a>模擬器問題：</h4><p>因為手上沒有ios18實機 所以需要使用模擬器來run 18的環境       </p>
+<p>基於build失敗的原因去找了幾篇文章後說是架構問題要排除(arm64)的裝置     </p>
+<p>最後找到說僅需要開啟使用Rosetta啟動的模擬器即可<br>(主要原因是因為專案架構上使用cocoapods或是Swift Package Manager<br>cocoapods不支援arm64架構的內容 所以要排除內容)<br>但最終找到可以使用rosetta版本的模擬器<br>Command中輸入  </p>
+<div class="code-wrapper"><pre><code class="hljs cmake">softwareupdate –<span class="hljs-keyword">install</span>-rosetta</code></pre></div>
+<p>同意條款後就能安裝了<br>之後只要在xcode中 上面功能列Product - Destination - Show All Run Destinations選擇後 會出現有rosetta版本的模擬器 選擇該模擬器build &amp; run即可</p>
+<hr>
+<h3 id="android-studio"><a href="#android-studio" class="headerlink" title="android studio"></a>android studio</h3><p>幾乎是沒有什麼問題 大多情形專案移植過去後僅需要 clean &#x2F; rebuild project大部分就可以解決了 </p>
+<p>最多是Gradle路徑會錯誤而已 但是整體專案都不影響</p>
+<hr>
+<h3 id="homebrew"><a href="#homebrew" class="headerlink" title="homebrew"></a>homebrew</h3><p>當初M1&amp;M2版本安裝會有一點問題 但是現在都沒問題了 依照官網操作 安裝然後新增path就可以了</p>
+<hr>
+<h3 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h3><p>從當初M1開始一堆東西會產生錯誤的情形到現在很順利的移植</p>
+<p>更不用提當初一堆人不看好 到現在逐漸穩定 <del>(看看某i的股價 不知道他們有沒有很後悔)</del></p>
+<p>背後也是一堆人努力的付出 蘋果真的要好好感謝當初那群開發者們 </p>
+<p>感謝這些開發者的努力回饋與付出</p>
 
                 
               </div>
@@ -308,7 +310,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/android/" class="print-no-link">#android</a>
+        <a href="/blog/tags/mac/" class="print-no-link">#mac</a>
       
     </div>
   
@@ -320,15 +322,15 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Android - 動畫異常關閉錯誤</div>
-      <div>https://uwumei.com/blog/2024/07/04/android-動畫異常關閉錯誤/</div>
+      <div>mac - 換機的一些紀錄</div>
+      <div>https://uwumei.com/blog/2024/10/23/mac-換機的一些紀錄/</div>
     </div>
     <div class="license-meta">
       
       
         <div class="license-meta-item license-meta-date">
           <div>發布於</div>
-          <div>2024年7月4日</div>
+          <div>2024年10月23日</div>
         </div>
       
       
@@ -359,18 +361,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/10/23/mac-%E6%8F%9B%E6%A9%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%B4%80%E9%8C%84/" title="mac - 換機的一些紀錄">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">mac - 換機的一些紀錄</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2024/06/20/Hexo-%E5%B9%ABFluid%E5%8A%A0%E4%B8%8ACC0%E8%91%97%E4%BD%9C/" title="Hexo - 幫Fluid加上CC0著作">
-                        <span class="hidden-mobile">Hexo - 幫Fluid加上CC0著作</span>
+                      <a href="/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/" title="Android - 動畫異常關閉錯誤">
+                        <span class="hidden-mobile">Android - 動畫異常關閉錯誤</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -391,8 +387,8 @@
       <script type="text/javascript">
         var disqus_config = function() {
           this.language = "zh_TW";
-          this.page.url = 'https://uwumei.com/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/';
-          this.page.identifier = '/blog/2024/07/04/android-%E5%8B%95%E7%95%AB%E7%95%B0%E5%B8%B8%E9%97%9C%E9%96%89%E9%8C%AF%E8%AA%A4/';
+          this.page.url = 'https://uwumei.com/blog/2024/10/23/mac-%E6%8F%9B%E6%A9%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%B4%80%E9%8C%84/';
+          this.page.identifier = '/blog/2024/10/23/mac-%E6%8F%9B%E6%A9%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%B4%80%E9%8C%84/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
